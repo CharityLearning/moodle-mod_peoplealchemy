@@ -41,10 +41,6 @@ function peoplealchemy_supports($feature) {
             return true;
         case FEATURE_COMPLETION_TRACKS_VIEWS:
             return true;
-        case FEATURE_GRADE_HAS_GRADE:
-            return false;
-        case FEATURE_GRADE_OUTCOMES:
-            return false;
         case FEATURE_BACKUP_MOODLE2:
             return true;
         case FEATURE_SHOW_DESCRIPTION:
@@ -67,7 +63,7 @@ function peoplealchemy_get_extra_capabilities() {
  * @param $data the data submitted from the reset course.
  * @return array status array
  */
-function peoplealchemy_reset_userdata($data) {
+function peoplealchemy_reset_userdata() {
     return array();
 }
 /**
@@ -104,8 +100,8 @@ function peoplealchemy_get_post_actions() {
  * @param object $mform
  * @return int new url instance id
  */
-function peoplealchemy_add_instance($data, $mform) {
-    global $CFG, $DB;
+function peoplealchemy_add_instance($data) {
+    global $DB;
     $parameters = array();
     for ($i = 0; $i < 100; $i++) {
         $parameter = "parameter_$i";
@@ -131,9 +127,9 @@ function peoplealchemy_add_instance($data, $mform) {
  * @param object $mform
  * @return bool true
  */
-function peoplealchemy_update_instance($data, $mform) {
+function peoplealchemy_update_instance($data) {
     global $CFG, $DB;
-    require_once($CFG->dirroot.'/mod/clearlesson/locallib.php');
+    require_once($CFG->dirroot.'/mod/peoplealchemy/locallib.php');
     $parameters = array();
     for ($i = 0; $i < 100; $i++) {
         $parameter = "parameter_$i";
@@ -156,22 +152,22 @@ function peoplealchemy_update_instance($data, $mform) {
     $data->externalref = peoplealchemy_fix_submitted_ref($data->externalref);
     $data->timemodified = time();
     $data->id           = $data->instance;
-    $DB->update_record('clearlesson', $data);
+    $DB->update_record('peoplealchemy', $data);
     return true;
 }
 
 /**
- * Delete clearlesson instance.
+ * Delete peoplealchemy instance.
  * @param int $id
  * @return bool true
  */
 function peoplealchemy_delete_instance($id) {
     global $DB;
-    if (!$url = $DB->get_record('clearlesson', array('id' => $id))) {
+    if (!$url = $DB->get_record('peoplealchemy', array('id' => $id))) {
         return false;
     }
     // Note: all context files are deleted automatically.
-    $DB->delete_records('clearlesson', array('id' => $url->id));
+    $DB->delete_records('peoplealchemy', array('id' => $url->id));
     return true;
 }
 
@@ -186,7 +182,7 @@ function peoplealchemy_delete_instance($id) {
  * @return cached_cm_info info
  */
 function peoplealchemy_get_coursemodule_info($coursemodule) {
-    global $CFG, $DB;
+    global $DB;
     if (!$peoplealchemy = $DB->get_record('peoplealchemy', array('id' => $coursemodule->instance),
     'id, name, intro, introformat')) {
         return null;
@@ -206,7 +202,7 @@ function peoplealchemy_get_coursemodule_info($coursemodule) {
  * @param stdClass $parentcontext Block's parent context
  * @param stdClass $currentcontext Current context of block
  */
-function peoplealchemy_page_type_list($pagetype, $parentcontext, $currentcontext) {
+function peoplealchemy_page_type_list() {
     $modulepagetype = array('mod-peoplealchemy-*' => get_string('page-mod-peoplealchemy-x', 'peoplealchemy'));
     return $modulepagetype;
 }
@@ -218,11 +214,11 @@ function peoplealchemy_page_type_list($pagetype, $parentcontext, $currentcontext
  */
 function peoplealchemy_export_contents($cm, $baseurl) {
     global $CFG, $DB;
-    require_once("$CFG->dirroot/mod/clearlesson/locallib.php");
+    require_once("$CFG->dirroot/mod/peoplealchemy/locallib.php");
     $contents = array();
     $context = context_module::instance($cm->id);
     $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $urlrecord = $DB->get_record('clearlesson', array('id' => $cm->instance), '*', MUST_EXIST);
+    $urlrecord = $DB->get_record('peoplealchemy', array('id' => $cm->instance), '*', MUST_EXIST);
     $fullurl = str_replace('&amp;', '&', peoplealchemy_get_full_url($urlrecord, $cm, $course));
     $isurl = clean_param($fullurl, PARAM_URL);
     if (empty($isurl)) {
@@ -230,7 +226,7 @@ function peoplealchemy_export_contents($cm, $baseurl) {
     }
 
     $url = array();
-    $url['type'] = 'clearlesson';
+    $url['type'] = 'peoplealchemy';
     $url['filename']     = clean_param(format_string($urlrecord->name), PARAM_FILE);
     $url['filepath']     = null;
     $url['filesize']     = 0;
@@ -270,7 +266,7 @@ function peoplealchemy_dndupload_handle($uploadinfo) {
     $data->externalurl = clean_param($uploadinfo->content, PARAM_URL);
     $data->timemodified = time();
     // Set the display options to the site defaults.
-    $config = get_config('clearlesson');
+    $config = get_config('peoplealchemy');
     $data->display = $config->display;
     $data->popupwidth = $config->popupwidth;
     $data->popupheight = $config->popupheight;
@@ -287,23 +283,23 @@ function peoplealchemy_dndupload_handle($uploadinfo) {
  * @param  stdClass $context    context object
  * @since Moodle 3.0
  */
-function peoplealchemy_view($clearlessonref, $course, $cm, $context) {
+function peoplealchemy_view($peoplealchemyref, $course, $cm, $context) {
     global $DB, $USER;
     // Trigger course_module_viewed event.
     $params = array(
         'context' => $context,
-        'objectid' => $clearlessonref->id
+        'objectid' => $peoplealchemyref->id
     );
 
-    $event = \mod_clearlesson\event\course_module_viewed::create($params);
+    $event = \mod_peoplealchemy\event\course_module_viewed::create($params);
     $event->add_record_snapshot('course_modules', $cm);
     $event->add_record_snapshot('course', $course);
-    $event->add_record_snapshot('clearlesson', $clearlessonref);
+    $event->add_record_snapshot('peoplealchemy', $peoplealchemyref);
     $event->trigger();
 
     $newview = new \stdClass();
     $newview->userid = $USER->id;
-    $newview->clearlessonid = $clearlessonref->id;
+    $newview->peoplealchemyid = $peoplealchemyref->id;
     $newview->timemodified = time();
     $DB->insert_record('peoplealchemy_track', $newview);
 
@@ -326,33 +322,33 @@ function peoplealchemy_check_updates_since(cm_info $cm, $from, $filter = array()
     return $updates;
 }
 function peoplealchemy_redirect_post($data, array $headers = null) {
-    $pluginconfig = get_config('clearlesson');
+    $pluginconfig = get_config('peoplealchemy');
     $curl = new \curl;
     if (!empty($headers)) {
         foreach ($headers as $key => $header) {
             $curl->setHeader("$key:$header");
         }
     }
-    $endpoint = new \moodle_url($pluginconfig->clearlessonurl.'/api/v1/userlogin');
+    $endpoint = new \moodle_url($pluginconfig->peoplealchemyurl.'/api/v1/userlogin');
     $response = json_decode($curl->post($endpoint, $data));
     if (isset($response->success)) {
         $url = new \moodle_url($response->authUrl);
         redirect($url);
     } else {
         if (debugging()) {
-            var_dump($response);
+            echo $response;
         }
-        throw new \moodle_exception(get_string('invalidresponse', 'clearlesson'));
+        throw new \moodle_exception(get_string('invalidresponse', 'peoplealchemy'));
     }
 }
 function peoplealchemy_build_url($url, $pluginconfig) {
-    if (substr($pluginconfig->clearlessonurl, -1) != '/') {
-        $pluginconfig->clearlessonurl .= '/';
+    if (substr($pluginconfig->peoplealchemyurl, -1) != '/') {
+        $pluginconfig->peoplealchemyurl .= '/';
     }
     if ($url->display == 1 AND $url->type == 'play') {
         $url->type = 'soloplay';
     }
-    $url = $pluginconfig->clearlessonurl.$url->type.'/'.$url->externalref;
+    $url = $pluginconfig->peoplealchemyurl.$url->type.'/'.$url->externalref;
     return $url;
 }
 function peoplealchemy_set_header($pluginconfig) {

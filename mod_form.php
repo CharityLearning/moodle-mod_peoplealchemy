@@ -28,10 +28,8 @@ require_once($CFG->dirroot.'/mod/peoplealchemy/locallib.php');
 
 class mod_peoplealchemy_mod_form extends moodleform_mod {
     public function definition() {
-        global $CFG, $DB;
+        global $CFG;
         $mform = $this->_form;
-
-        $config = get_config('peoplealchemy');
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
         $mform->addElement('text', 'name', get_string('name'), array('size' => '48'));
@@ -51,9 +49,10 @@ class mod_peoplealchemy_mod_form extends moodleform_mod {
     }
 
     public function data_preprocessing(&$defaultvalues) {
+        return $defaultvalues;
     }
 
-    public function validation($data, $files) {
+    public function validation() {
         return array();
     }
 

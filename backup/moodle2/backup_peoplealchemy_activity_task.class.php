@@ -52,7 +52,6 @@ class backup_peoplealchemy_activity_task extends backup_activity_task {
      * @return string the content with the Clear Lessons encoded
      */
     static public function encode_content_links($content) {
-        global $CFG;
         return $content;
     }
 }

@@ -31,3 +31,5 @@ $string['missingnetworkkey'] = 'Missing Network Key';
 $string['missingnetworkkeydesc'] = 'Please contact your site administrator. They are missing the required network access key. If you are a site administrator please add your network key.';
 $string['viewsettings'] = 'Click here to view your settings';
 $string['modulename_help'] = 'The People Alchemy module provides a link to your People Alchemy platform. A license for People Alchemy is required in order to use this activity module.';
+$string['peoplealchemy:addinstance'] = 'Add instance';
+$string['addinstance'] = 'Add instance';

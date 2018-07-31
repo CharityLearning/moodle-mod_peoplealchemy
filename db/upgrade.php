@@ -45,11 +45,9 @@
 defined('MOODLE_INTERNAL') || die;
 
 function xmldb_peoplealchemy_upgrade($oldversion) {
-    global $CFG;
 
     if ($oldversion < 2017091202) {
         echo("Pre-release version detected. The plugin should be completely removed first.\n");
-        exit(1);
     }
 
     return true;

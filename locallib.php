@@ -136,7 +136,7 @@ function peoplealchemy_filter_callback($matches) {
  */
 function peoplealchemy_print_header($peoplealchemy, $cm, $course) {
     global $PAGE, $OUTPUT;
-
+    $PAGE->set_title($cm->id);
     $PAGE->set_title($course->shortname.': '.$peoplealchemy->name);
     $PAGE->set_heading($course->fullname);
     $PAGE->set_activity_record($peoplealchemy);
@@ -151,7 +151,7 @@ function peoplealchemy_print_header($peoplealchemy, $cm, $course) {
  * @param bool $notused This variable is no longer used.
  * @return void
  */
-function peoplealchemy_print_heading($peoplealchemy, $cm, $course, $notused = false) {
+function peoplealchemy_print_heading($peoplealchemy) {
     global $OUTPUT;
     echo $OUTPUT->heading(format_string($peoplealchemy->name), 2);
 }
@@ -164,16 +164,12 @@ function peoplealchemy_print_heading($peoplealchemy, $cm, $course, $notused = fa
  * @param bool $ignoresettings print even if not specified in modedit
  * @return void
  */
-function peoplealchemy_print_intro($peoplealchemy, $cm, $course, $ignoresettings=false) {
+function peoplealchemy_print_intro($peoplealchemy, $cm) {
     global $OUTPUT;
-
-    $options = empty($peoplealchemy->displayoptions) ? array() : unserialize($peoplealchemy->displayoptions);
-    if ($ignoresettings or !empty($options['printintro'])) {
-        if (trim(strip_tags($peoplealchemy->intro))) {
-            echo $OUTPUT->box_start('mod_introbox', 'peoplealchemyintro');
-            echo format_module_intro('peoplealchemy', $peoplealchemy, $cm->id);
-            echo $OUTPUT->box_end();
-        }
+    if (trim(strip_tags($peoplealchemy->intro))) {
+        echo $OUTPUT->box_start('mod_introbox', 'peoplealchemyintro');
+        echo format_module_intro('peoplealchemy', $peoplealchemy, $cm->id);
+        echo $OUTPUT->box_end();
     }
 }
 
@@ -183,8 +179,7 @@ function peoplealchemy_print_intro($peoplealchemy, $cm, $course, $ignoresettings
  * @param object $config peoplealchemy module config options
  * @return array array describing opt groups
  */
-function peoplealchemy_get_variable_options($config) {
-    global $CFG;
+function peoplealchemy_get_variable_options() {
 
     $options = array();
     $options[''] = array('' => get_string('chooseavariable', 'peoplealchemy'));
