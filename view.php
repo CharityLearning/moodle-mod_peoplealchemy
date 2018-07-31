@@ -40,6 +40,17 @@ $PAGE->set_url('/mod/peoplealchemy/view.php');
 if (empty($config)) {
     $config = get_config('peoplealchemy');
 }
+if (empty($config->networkkey)) {
+    echo $OUTPUT->header();
+    echo \html_writer::tag('h1', get_string('missingnetworkkey', 'mod_peoplealchemy'));
+    echo \html_writer::tag('p', get_string('missingnetworkkeydesc', 'mod_peoplealchemy'));
+    if (is_siteadmin($USER)) {
+        $settings = new \moodle_url("$CFG->wwwroot/admin/settings.php", array('section' => 'modsettingpeoplealchemy'));
+        echo \html_writer::link($settings, get_string('viewsettings', 'peoplealchemy'));
+    }
+    echo $OUTPUT->footer();
+    die();
+}
 $params = array('target' => 'login',
 'action' => 'pass',
 'Network' => $config->networkkey,

@@ -15,21 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_url instance list viewed event.
+ * The mod_peoplealchemy instance list viewed event.
  *
- * @package    mod_clearlesson
+ * @package    mod_peoplealchemy
  * @copyright  2017 Josh Willcock
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_clearlesson\event;
+namespace mod_peoplealchemy\event;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
  * The mod_url instance list viewed event class.
  *
- * @package    mod_clearlesson
+ * @package    mod_peoplealchemy
  * @since      Moodle 2.7
  * @copyright  2017 Josh Willcock
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

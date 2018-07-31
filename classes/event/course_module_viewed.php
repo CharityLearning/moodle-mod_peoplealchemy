@@ -15,21 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_url course module viewed event.
+ * The mod_peoplealchemy course module viewed event.
  *
- * @package    mod_clearlesson
+ * @package    mod_peoplealchemy
  * @copyright  2017 Josh Willcock
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_clearlesson\event;
+namespace mod_peoplealchemy\event;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The mod_url course module viewed event class.
+ * The mod_peoplealchemy course module viewed event class.
  *
- * @package    mod_clearlesson
+ * @package    mod_peoplealchemy
  * @since      Moodle 2.7
  * @copyright  2017 Josh Willcock
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -42,12 +42,12 @@ class course_module_viewed extends \core\event\course_module_viewed {
      * @return void d
      */
     protected function init() {
-        $this->data['objecttable'] = 'clearlesson';
+        $this->data['objecttable'] = 'peoplealchemy';
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
     }
 
     public static function get_objectid_mapping() {
-        return array('db' => 'clearlesson', 'restore' => 'clearlesson');
+        return array('db' => 'peoplealchemy', 'restore' => 'peoplealchemy');
     }
 }

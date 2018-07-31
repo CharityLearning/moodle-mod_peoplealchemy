@@ -21,8 +21,13 @@
  * @copyright  2018 Josh Willcock  {@link http://josh.cloud}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+$string['pluginname'] = 'People Alchemy';
 $string['modulename'] = 'People Alchemy';
 $string['peoplealchemyurl'] = 'People Alchemy Platform URL';
 $string['peoplealchemyurldesc'] = 'Url for your People Alchemy Platform with no trailing slash.';
 $string['networkkey'] = 'Network Key';
 $string['networkkeydesc'] = 'Your Network Key from the People Alchemy Platform.';
+$string['missingnetworkkey'] = 'Missing Network Key';
+$string['missingnetworkkeydesc'] = 'Please contact your site administrator. They are missing the required network access key. If you are a site administrator please add your network key.';
+$string['viewsettings'] = 'Click here to view your settings';
+$string['modulename_help'] = 'The People Alchemy module provides a link to your People Alchemy platform. A license for People Alchemy is required in order to use this activity module.';

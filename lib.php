@@ -46,7 +46,7 @@ function peoplealchemy_supports($feature) {
         case FEATURE_GRADE_OUTCOMES:
             return false;
         case FEATURE_BACKUP_MOODLE2:
-            return false;
+            return true;
         case FEATURE_SHOW_DESCRIPTION:
             return true;
         default:
@@ -99,7 +99,7 @@ function peoplealchemy_get_post_actions() {
 }
 
 /**
- * Add clearlesson instance.
+ * Add People Alchemy instance.
  * @param object $data
  * @param object $mform
  * @return int new url instance id
