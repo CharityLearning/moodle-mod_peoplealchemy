@@ -112,7 +112,6 @@ function peoplealchemy_add_instance($data) {
         $parameters[$data->$parameter] = $data->$variable;
     }
     $data->parameters = serialize($parameters);
-
     $data->displayoptions = serialize($displayoptions);
 
     $data->timemodified = time();
@@ -212,11 +211,10 @@ function peoplealchemy_page_type_list() {
  *
  * @return array of file content
  */
-function peoplealchemy_export_contents($cm, $baseurl) {
+function peoplealchemy_export_contents($cm) {
     global $CFG, $DB;
     require_once("$CFG->dirroot/mod/peoplealchemy/locallib.php");
     $contents = array();
-    $context = context_module::instance($cm->id);
     $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
     $urlrecord = $DB->get_record('peoplealchemy', array('id' => $cm->instance), '*', MUST_EXIST);
     $fullurl = str_replace('&amp;', '&', peoplealchemy_get_full_url($urlrecord, $cm, $course));

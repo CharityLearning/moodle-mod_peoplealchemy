@@ -21,4 +21,5 @@
  * @copyright  2018 Josh Willcock  {@link http://josh.cloud}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ require('../../config.php');
  redirect('view.php');
