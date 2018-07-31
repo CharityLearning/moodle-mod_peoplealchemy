@@ -1,5 +1,5 @@
 # moodle-mod_peoplealchemy
-[![Build Status](https://travis-ci.org/CharityLearning/moodle-mod_peoplealchemy.svg?branch=master)][https://travis-ci.org/CharityLearning/moodle-mod_peoplealchemy)
+[![Build Status](https://travis-ci.org/CharityLearning/moodle-mod_peoplealchemy.svg?branch=master)](https://travis-ci.org/CharityLearning/moodle-mod_peoplealchemy)
 Moodle Activity Module which enables SSO from Moodle to People Alchemy's Alchemy Assistant platform.
 
 
