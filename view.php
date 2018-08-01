@@ -51,6 +51,7 @@ if (empty($config->networkkey)) {
     echo $OUTPUT->footer();
     die();
 }
+$origin = str_replace('https://', '', $CFG->wwwroot);
 $params = array('target' => 'login',
 'action' => 'pass',
 'Network' => $config->networkkey,
@@ -58,6 +59,6 @@ $params = array('target' => 'login',
 'FirstName' => $USER->firstname,
 'LastName' => $USER->lastname,
 'Email' => $USER->email,
-'Group' => str_replace('https://', '', $CFG->wwwroot),
+'Group' => $origin);
 $address = new moodle_url("$config->peoplealchemyurl/index.php", $params);
 redirect($address);
