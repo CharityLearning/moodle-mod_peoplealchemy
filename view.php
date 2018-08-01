@@ -58,6 +58,6 @@ $params = array('target' => 'login',
 'FirstName' => $USER->firstname,
 'LastName' => $USER->lastname,
 'Email' => $USER->email,
-'Group' => str_replace('https://', '', $CFG->wwwroot);
+'Group' => str_replace('https://', '', $CFG->wwwroot),
 $address = new moodle_url("$config->peoplealchemyurl/index.php", $params);
 redirect($address);
