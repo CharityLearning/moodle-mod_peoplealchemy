@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 
 $functions = array(
 
-    'mod_clearlesson_view_url' => array(
+    'mod_peoplealchemy_view_url' => array(
         'classname'     => 'mod_peoplealchemy_external',
         'methodname'    => 'view_url',
         'description'   => 'Trigger the course module viewed event and update the module completion status.',
